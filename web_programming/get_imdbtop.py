@@ -35,7 +35,7 @@ def get_imdb_top_movies(num_movies: int = 5) -> tuple:
         "https://www.imdb.com/search/title?title_type="
         f"feature&sort=num_votes,desc&count={num_movies}"
     )
-    source = bs4.BeautifulSoup(requests.get(base_url).content, "html.parser")
+    source = bs4.BeautifulSoup(requests.get(base_url, timeout=60).content, "html.parser")
     return tuple(
         get_movie_data_from_soup(movie)
         for movie in source.find_all("div", class_="lister-item mode-advanced")
